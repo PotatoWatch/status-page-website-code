@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2 class="mb-4">Status Page</h2>
+  <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Url</th>
+      <th scope="col">Operation</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td><a href="{{ url_for('get_website', name=named) }}">{{named}}</a></td>
+      <td>{{website_url}}</td>
+      <td>
+      	{% if ops == '0' %}
+      			<p>Operation: All Normal</p>
+      		{% elif ops == '1' %}
+      			<p>Operation: Minor Issues</p>
+      		{% elif ops == '2' %}
+      			<p>Operation: Major Issues</p>
+      		{% elif ops == '3' %}
+      			<p>Operation: System Outage</p>
+      		{% elif ops == None %}
+      			<p>Operation: Not Set</p>
+      		{% else %}
+      			<p>Error retrieving operation status</p>
+      		{% endif %}	
+      </td>
+      <td><a href="{{ url_for('website_edit') }}">Edit</a></td>
+    </tr>
+    <tr>
+
+{% endblock content %}

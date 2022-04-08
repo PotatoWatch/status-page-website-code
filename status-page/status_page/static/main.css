@@ -1,0 +1,28 @@
+.bg-light-grey {
+	background-color: #EEEEEE;
+}
+
+h1, h2, h3, h4, h5, h6, p, a {
+	color: #000000; !important
+}
+
+.font-big {
+   font-size: 300; cursive !important
+}
+
+@media only screen and (max-width: 990px) {
+   .changeMeWhenSmall {
+    position: absolute;
+    right: 60px;
+    top: 16px;
+    }
+  }
+
+.custom-nav-bg {
+   background:  #EEEEEE;
+}
+
+body {
+    background-color: #E7E7E7;
+    overflow: hidden;
+}

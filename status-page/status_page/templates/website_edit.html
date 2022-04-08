@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="m-4">
+        <form method="POST" action="" class="form-group border border-2 rounded p-3">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="bold">Edit Website</legend>
+                <div class="form-group">
+                    {{ form.name.label(class="form-control-label pt-1") }}
+
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.website_url.label(class="form-control-label pt-2") }}
+                    {% if form.website_url.errors %}
+                        {{ form.website_url(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.website_url.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.website_url(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.ops.label(class="form-control-label pt-2") }}
+                    {% if form.ops.errors %}
+                        {{ form.ops(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.ops.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.ops(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.current_update.label(class="form-control-label pt-2") }}
+                    {% if form.current_update.errors %}
+                        {{ form.current_update(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.current_update.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.current_update(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group pt-3 mb-2">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+        <div class="pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
+

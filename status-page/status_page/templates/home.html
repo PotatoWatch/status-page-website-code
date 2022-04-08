@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="p-4 shadow-4 rounded-3 text-center" style="background-color: hsl(0, 0%, 94%);">
+  <h2 class="p-4">Status Page</h2>
+  <p class="p-4">
+    A random website that some person came up with when they were bored.
+  </p>
+
+  <p class="p-4">
+  	Created with Flask (and extensions) along with Bootstrap 5.
+  </p>
+
+  <p class="p-4">
+  	Code can be viewed <a href="https://www.google.com/">here</a> on Github
+  </p>
+
+  <p class="p-4">
+  	🐍
+  </p>
+
+  <hr class="my-4" />
+
+  
+  <div class="p-4">
+  	<p class="p-2">
+    	Try it now	
+  	</p>
+
+  	{% if current_user.is_authenticated %}
+  		<a href="{{ url_for('web_pg')}}">
+  			<button type="button" class="btn btn-primary">
+  			  Let's go
+  			</button>
+  		</a>
+  	{% else%}
+  	    <a href="{{ url_for('register')}}">
+  	    	<button type="button" class="btn btn-primary">
+  	    	  Let's go
+  	    	</button>
+  	    </a>
+  	{% endif %}
+
+
+  	
+  </div>
+
+  <p class="p-4">
+  	Disclaimer: This will get deleted eventually.
+  </p>
+
+  <p class="p-4">
+  	Have a good day!
+  </p>
+
+  <div class="p-1">
+  	<small class="">
+  		I'm really bad at making heros. (if you can call this one)
+  	</small>
+  </div>
+ 
+  
+</div>
+
+{% endblock content %}
