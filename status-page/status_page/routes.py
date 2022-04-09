@@ -11,7 +11,7 @@ def error_han(e):
 
 @app.route('/')
 def home():
-	return render_template('home.html')
+	return render_template('home.html', title='SP Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -25,7 +25,7 @@ def login():
 			return redirect(url_for('home'))
 		else:
 			flash('Login Unsuccessful. Please check email and password.')
-	return render_template('login.html', form=form)
+	return render_template('login.html', form=form, title='Login - SP')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -39,7 +39,7 @@ def register():
 		db.session.commit()
 		flash(f"Your account has been created! You are now able to log in.")
 		return redirect(url_for('login'))
-	return render_template('register.html', form=form)
+	return render_template('register.html', form=form, title='Register - SP')
 
 @app.route('/website', methods=['GET', 'POST'])
 def web_pg():
@@ -48,7 +48,7 @@ def web_pg():
 			return redirect(url_for('newweb'))
 		else:
 			web = Website_data.query.filter_by(uid=current_user.id).first()
-			return render_template('website.html', ops=web.ops, website_url=web.website_url, named=web.name)
+			return render_template('website.html', ops=web.ops, website_url=web.website_url, named=web.name, title='View Website - SP')
 
 @app.route('/website/new', methods=['GET', 'POST'])
 def newweb():
@@ -59,7 +59,7 @@ def newweb():
 		db.session.add(web)
 		db.session.commit()
 		return redirect(url_for('web_pg'))
-	return render_template('new_website.html', form=form)
+	return render_template('new_website.html', form=form, title='Create a new website - SP')
 
 @app.route('/website/edit', methods=['GET', 'POST'])
 def website_edit():
@@ -93,15 +93,19 @@ def website_edit():
 		form.ops.data = web_d.ops
 		form.current_update.data = web_d.update_latest
 
-		return render_template('website_edit.html', form=form)
+		return render_template('website_edit.html', form=form, title='Edit website - SP')
 
-# @app.route('/<name>')
-# def get_website(name):
-# 	web = Website_data.query.filter_by(truen=str(name).lower()).first()
-# 	if web == "":
-# 		abort(404)
-# 	else:
-# 		return render_template('status.html', data=web, name=f"{current_user.username}'s Status Page")
+@app.route('/<name>')
+def get_website(name):
+	web = Website_data.query.filter_by(truen=str(name).lower()).first()
+	if web == "":
+		abort(404)
+	else:
+		def cut_time(time):
+				dt = str(time)
+				d_split = dt.split('.')
+				return d_split[0]
+		return render_template('status.html', data=web, title=f"{web.website_url} - Status Page", cut_time=cut_time)
 
 @app.route("/logout")
 def logout():
