@@ -3,6 +3,7 @@ from status_page import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from status_page.models import User, Website_data
 from status_page.forms import RegistrationForm, LoginForm, registerWebsite, SetWebsiteData
+from datetime import datetime
 
 @app.errorhandler(404)
 def error_han(e):
@@ -64,40 +65,43 @@ def newweb():
 def website_edit():
 	if current_user.is_authenticated:
 		form = SetWebsiteData()
-		web_d = Website_data(uid=current_user.id)
+		web_d = Website_data.query.filter_by(uid=current_user.id).first()
 		if form.validate_on_submit():
 			web_d.name = form.name.data
-
-			web_d.ops = form.ops.data
-			web_d.update_latest = form.current_update.data
+			web_d.website_url = form.website_url.data
 
 			web_d.update_past_3 = web_d.update_past_2
 			web_d.update_past_3_time = web_d.update_past_2_time
 
 			web_d.update_past_1 = web_d.update_past_1_time
-			web_d.update_past_1_time = web_d.update_past_1_time
+			web_d.update_past_2_time = web_d.update_past_1_time
 
 			web_d.update_past_1 = web_d.update_latest
 			web_d.update_past_1_time = web_d.update_latest_time
 
 			web_d.ops = form.ops.data
+			web_d.update_latest_time = datetime.utcnow()
 			web_d.update_latest = form.current_update.data 
 
 			db.session.commit()
 
 			flash('Website updated.')
 			return redirect(url_for('website_edit'))
-
 		
+		form.name.data = web_d.name
+		form.website_url.data = web_d.website_url
+		form.ops.data = web_d.ops
+		form.current_update.data = web_d.update_latest
+
 		return render_template('website_edit.html', form=form)
 
-@app.route('/<name>')
-def get_website(name):
-	web = Website_data.query.filter_by(truen=str(name).lower()).first()
-	if web == "":
-		abort(404)
-	else:
-		return render_template('status.html', data=web, name=f"{current_user.username}'s Status Page")
+# @app.route('/<name>')
+# def get_website(name):
+# 	web = Website_data.query.filter_by(truen=str(name).lower()).first()
+# 	if web == "":
+# 		abort(404)
+# 	else:
+# 		return render_template('status.html', data=web, name=f"{current_user.username}'s Status Page")
 
 @app.route("/logout")
 def logout():
