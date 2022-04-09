@@ -48,13 +48,15 @@ def web_pg():
 			return redirect(url_for('newweb'))
 		else:
 			web = Website_data.query.filter_by(uid=current_user.id).first()
-			return render_template('website.html', ops=web.ops, website_url=web.website_url, named=web.name, title='View Website - SP')
+			return render_template('website.html', ops=web.ops, website_url=web.website_url, named=web.truen, title='View Website - SP')
 
 @app.route('/website/new', methods=['GET', 'POST'])
 def newweb():
 	form = registerWebsite()
 	if form.validate_on_submit() and current_user.has_website == 'False':
-		web = Website_data(name=form.name.data, website_url=form.website_url.data, truen=str(form.name.data).lower(), author=current_user)
+		remove_spaces = str(form.name.data)
+		remove_space = remove_spaces.replace(" ", "")
+		web = Website_data(name=form.name.data, website_url=form.website_url.data, truen=remove_space, author=current_user)
 		current_user.has_website = 'True'
 		db.session.add(web)
 		db.session.commit()
@@ -98,7 +100,7 @@ def website_edit():
 @app.route('/<name>')
 def get_website(name):
 	web = Website_data.query.filter_by(truen=str(name).lower()).first()
-	if web == "":
+	if web == None:
 		abort(404)
 	else:
 		def cut_time(time):
