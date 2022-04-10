@@ -25,7 +25,7 @@ class Website_data(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(16), unique=True)
 	truen = db.Column(db.String(16), unique=False)
-	website_url = db.Column(db.String(30), unique=False, nullable=False)
+	website_url = db.Column(db.String(60), unique=False, nullable=False)
 	ops = db.Column(db.String(51), unique=False, nullable=True)
 	update_latest = db.Column(db.String(200), unique=False, nullable=True)
 	update_latest_time = db.Column(db.DateTime, nullable=True)

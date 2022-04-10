@@ -38,7 +38,7 @@ class registerWebsite(FlaskForm):
 	 						Length(min=1, max=16)])
 
 	website_url = StringField('Enter website url', validators=[DataRequired(),
-	 						Length(min=1, max=50)])
+	 						Length(min=1, max=60)])
 
 	submit = SubmitField('Create website!')
 
@@ -51,7 +51,7 @@ class SetWebsiteData(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(),
 	 						Length(min=2, max=16)])
 	website_url = StringField('Update URL', validators=[DataRequired(),
-	 						Length(min=2, max=30)])
+	 						Length(min=2, max=60)])
 	# ops = SelectField('Operation', 
 	# 	choices=[('0', 'All Normal'), ('1', 'Minor Issues'), ('2', 'Major Issues'), ('3', 'System Outage')])
 
